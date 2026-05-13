@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=-9(buv8=*o4f21m14%6id6_7!+)l*b+rm%2u#v)p&f73vv)xm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -143,6 +143,8 @@ VNPAY_HASH_SECRET_KEY = os.getenv('VNPAY_HASH_SECRET_KEY')
 VNPAY_PAYMENT_URL = os.getenv('VNPAY_PAYMENT_URL')
 
 VNPAY_RETURN_URL = os.getenv('VNPAY_RETURN_URL')
+
+ALLOWED_HOSTS = ["*"]
 
 TIME_ZONE = "Asia/Ho_Chi_Minh"
 USE_TZ = True
