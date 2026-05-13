@@ -39,9 +39,12 @@
                     <ul class="dropdown-position-list">
 
                         {% if user.is_authenticated %}
-                            {% if user.is_superuser or user.customer.role == 'admin' %}
+                            {% if user.is_superuser %}
+                                <li><a href="{% url 'dashboard' %}">Trang quản trị</a></li>
+                            {% elif user.customer and user.customer.role == 'admin' %}
                                 <li><a href="{% url 'dashboard' %}">Trang quản trị</a></li>
                             {% endif %}
+
                             <li><a href="{% url 'my_orders' %}">Đơn hàng của tôi</a></li>
                             <li><a href="{% url 'profile' %}">Thông tin tài khoản</a></li>
                             <li><a href="{% url 'logout' %}">Đăng xuất</a></li>

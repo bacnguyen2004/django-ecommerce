@@ -8,14 +8,13 @@ def admin_required(view_func):
 
         if request.user.is_authenticated:
 
+            if request.user.is_superuser:
+                return view_func(request, *args, **kwargs)
+
             customer = getattr(request.user, 'customer', None)
 
             if customer and customer.role == 'admin':
-                return view_func(
-                    request,
-                    *args,
-                    **kwargs
-                )
+                return view_func(request, *args, **kwargs)
 
         return redirect('home')
 
