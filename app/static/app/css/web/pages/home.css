@@ -1,0 +1,478 @@
+/* =========================
+   HOME HERO
+========================= */
+
+.home-hero {
+    padding: 60px 0 40px;
+    background: linear-gradient(135deg, #f8fafc, #eef2ff);
+}
+
+.home-hero__wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 45px;
+    min-height: 520px;
+}
+
+.hero-badge,
+.home-section-head span,
+.promo-content span,
+.newsletter-box span {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.home-hero__content h1 {
+    font-size: 58px;
+    line-height: 1.08;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 22px;
+}
+
+.home-hero__content p {
+    max-width: 520px;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #64748b;
+    margin-bottom: 32px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.hero-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 30px;
+    border-radius: 999px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.hero-btn-primary {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+}
+
+.hero-btn-primary:hover {
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+.hero-btn-light {
+    background: #fff;
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
+}
+
+.hero-btn-light:hover {
+    color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.home-hero__image {
+    position: relative;
+}
+
+.home-hero__image img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    border-radius: 34px;
+    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.15);
+}
+
+
+/* =========================
+   BENEFITS
+========================= */
+
+.home-benefits {
+    margin-top: -25px;
+    position: relative;
+    z-index: 3;
+}
+
+.benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.benefit-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #eef2f7;
+    border-radius: 22px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+}
+
+.benefit-card i {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    line-height: 54px;
+    text-align: center;
+    border-radius: 18px;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary);
+    font-size: 22px;
+}
+
+.benefit-card h5 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: #0f172a;
+}
+
+.benefit-card p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.home-section {
+    padding: 80px 0;
+}
+
+.section-soft {
+    background: #f8fafc;
+}
+
+.home-section-head {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.home-section-head h2 {
+    font-size: 36px;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.home-section-head p {
+    color: #64748b;
+    font-size: 15px;
+    margin: 0;
+}
+
+.home-section-between {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    text-align: left;
+    gap: 20px;
+}
+
+.view-more {
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--primary);
+    font-weight: 700;
+    border: 1px solid #e2e8f0;
+}
+
+.view-more:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 22px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.category-card {
+    display: block;
+    text-align: center;
+    padding: 28px 18px;
+    border-radius: 26px;
+    background: #fff;
+    border: 1px solid #eef2f7;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.1);
+}
+
+.category-card img {
+    width: 92px;
+    height: 92px;
+    object-fit: cover;
+    border-radius: 24px;
+    margin-bottom: 18px;
+}
+
+.category-card h5 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 5px;
+}
+
+.category-card span {
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* =========================
+   PRODUCT
+========================= */
+
+.product-slider {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+
+/* =========================
+   PROMO
+========================= */
+
+.promo-section {
+    padding: 80px 0;
+}
+
+.promo-box {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    align-items: center;
+    gap: 40px;
+    padding: 55px;
+    border-radius: 34px;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    overflow: hidden;
+}
+
+.promo-content h2 {
+    font-size: 40px;
+    line-height: 1.2;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 16px;
+}
+
+.promo-content p {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.promo-image img {
+    width: 100%;
+    height: 310px;
+    object-fit: cover;
+    border-radius: 28px;
+}
+
+
+/* =========================
+   NEWSLETTER
+========================= */
+
+.newsletter-modern {
+    padding: 80px 0;
+    background: #f8fafc;
+}
+
+.newsletter-box {
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    gap: 35px;
+    align-items: center;
+    padding: 50px;
+    border-radius: 34px;
+    background: #fff;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.newsletter-box h2 {
+    font-size: 34px;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.newsletter-box p {
+    color: #64748b;
+    margin: 0;
+}
+
+.newsletter-form {
+    display: flex;
+    padding: 7px;
+    border-radius: 999px;
+    background: #f1f5f9;
+}
+
+.newsletter-form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 20px;
+}
+
+.newsletter-form button {
+    border: none;
+    border-radius: 999px;
+    padding: 13px 28px;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+}
+
+
+/* =========================
+   SLIDER CUSTOM
+========================= */
+
+.slider-arrow .slick-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--primary);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+    transition: all 0.3s ease;
+}
+
+.slider-arrow .slick-arrow:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 991px) {
+    .home-hero__wrap,
+    .promo-box,
+    .newsletter-box {
+        grid-template-columns: 1fr;
+    }
+
+    .home-hero__content h1 {
+        font-size: 42px;
+    }
+
+    .home-hero__image img {
+        height: 360px;
+    }
+
+    .benefit-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .home-section-between {
+        display: block;
+    }
+
+    .view-more {
+        display: inline-block;
+        margin-top: 18px;
+    }
+}
+
+@media (max-width: 575px) {
+    .home-hero {
+        padding-top: 35px;
+    }
+
+    .home-hero__content h1 {
+        font-size: 34px;
+    }
+
+    .home-hero__content p {
+        font-size: 15px;
+    }
+
+    .home-hero__image img {
+        height: 260px;
+        border-radius: 24px;
+    }
+
+    .benefit-grid,
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .promo-box,
+    .newsletter-box {
+        padding: 30px 22px;
+        border-radius: 26px;
+    }
+
+    .promo-content h2,
+    .newsletter-box h2,
+    .home-section-head h2 {
+        font-size: 28px;
+    }
+
+    .newsletter-form {
+        display: block;
+        border-radius: 22px;
+        padding: 12px;
+    }
+
+    .newsletter-form input {
+        width: 100%;
+        height: 45px;
+    }
+
+    .newsletter-form button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

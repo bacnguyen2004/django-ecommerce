@@ -1,0 +1,191 @@
+{% extends "app/admin/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Quản lý đơn hàng{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'app/css/admin/pages/order.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="order-page">
+
+    <!-- HEADER -->
+    <div class="order-header">
+
+        <div>
+            <span class="page-label">
+                Orders
+            </span>
+
+            <h2>Quản lý đơn hàng</h2>
+
+            <p>
+                Danh sách toàn bộ đơn hàng trong hệ thống
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+    <div class="order-card">
+
+        <div class="table-responsive">
+
+            <table class="table order-table">
+
+                <thead>
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Khách hàng</th>
+                        <th>Sản phẩm</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in orders %}
+                    <tr>
+
+                        <td>
+                            <strong class="order-id">
+                                #{{ item.id }}
+                            </strong>
+                        </td>
+
+                        <td>
+
+                            <div class="customer-info">
+
+                                <div class="customer-avatar">
+                                    {% if item.customer %}
+                                        {{ item.customer.name|first|upper }}
+                                    {% else %}
+                                        G
+                                    {% endif %}
+                                </div>
+
+                                <div>
+
+                                    <h6>
+                                        {% if item.customer %}
+                                            {{ item.customer.name }}
+                                        {% else %}
+                                            Guest
+                                        {% endif %}
+                                    </h6>
+
+                                    <small>
+                                        Customer
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td>
+                            {{ item.total_items }}
+                        </td>
+
+                        <td>
+
+                            <strong class="price">
+                                {{ item.total_price|floatformat:0 }} đ
+                            </strong>
+
+                        </td>
+
+                        <td>
+
+                            {% if item.status == 'pending' %}
+
+                                <span class="status-badge pending">
+                                    Chờ xác nhận
+                                </span>
+
+                            {% elif item.status == 'shipping' %}
+
+                                <span class="status-badge shipping">
+                                    Đang giao
+                                </span>
+
+                            {% elif item.status == 'completed' %}
+
+                                <span class="status-badge completed">
+                                    Hoàn thành
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge cancelled">
+                                    Đã hủy
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td class="date">
+                            {{ item.created_at|date:"d/m/Y H:i" }}
+                        </td>
+
+                        <td>
+
+                            <div class="order-actions">
+
+                                <a href="{% url 'admin_order_detail' item.id %}"
+                                   class="action-btn view">
+
+                                    <i class="fas fa-eye"></i>
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="7">
+
+                            <div class="empty-state">
+
+                                <i class="fas fa-shopping-cart"></i>
+
+                                <h5>Chưa có đơn hàng nào</h5>
+
+                                <p>
+                                    Hiện chưa có dữ liệu đơn hàng trong hệ thống.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

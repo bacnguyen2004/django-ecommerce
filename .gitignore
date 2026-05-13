@@ -1,0 +1,14 @@
+Lib/
+Scripts/
+Include/
+
+__pycache__/
+*.pyc
+
+.env
+
+db.sqlite3
+
+media/
+
+staticfiles/

@@ -1,0 +1,104 @@
+{% load static %}
+
+<li class="product-card-item">
+
+    <div class="product-card-modern">
+
+        <!-- IMAGE -->
+        <div class="product-media-modern">
+
+            <a href="{% url 'product_detail' item.id %}" class="product-image-modern">
+
+                {% if item.product_image %}
+                    <img src="{{ item.product_image.url }}" alt="{{ item.product_name }}">
+                {% else %}
+                    <img src="{% static 'app/images/error.png' %}" alt="No image">
+                {% endif %}
+
+            </a>
+
+            <!-- WISHLIST -->
+            <a href="{% url 'add_wishlist' item.id %}"
+               class="product-wish-modern {% if item.id in wishlist_product_ids %}active{% endif %}">
+                <i class="fas fa-heart"></i>
+            </a>
+
+            <!-- LABELS -->
+            {% if label or item.discount > 0 or item.quantity <= 0 %}
+                <div class="product-label-modern">
+
+                    {% if item.quantity <= 0 %}
+                        <span class="badge-modern badge-sold">
+                            Hết hàng
+                        </span>
+                    {% elif item.discount > 0 %}
+                        <span class="badge-modern badge-sale">
+                            -{{ item.discount }}%
+                        </span>
+                    {% elif label %}
+                        <span class="badge-modern badge-new">
+                            {{ label }}
+                        </span>
+                    {% endif %}
+
+                </div>
+            {% endif %}
+
+            <!-- QUICK VIEW -->
+            <a href="{% url 'product_detail' item.id %}" class="quick-view-btn">
+                Xem chi tiết
+            </a>
+
+        </div>
+
+        <!-- CONTENT -->
+        <div class="product-content-modern">
+
+            <div class="product-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span>4.5</span>
+            </div>
+
+            <h6 class="product-name-modern">
+                <a href="{% url 'product_detail' item.id %}">
+                    {{ item.product_name }}
+                </a>
+            </h6>
+
+            <div class="product-price-modern">
+
+                {% if item.discount > 0 %}
+                    <del>{{ item.price|floatformat:0 }} đ</del>
+                    <span>{{ item.sale_price|floatformat:0 }} đ</span>
+                {% else %}
+                    <span>{{ item.price|floatformat:0 }} đ</span>
+                {% endif %}
+
+            </div>
+
+            {% if item.quantity > 0 %}
+
+                <a class="product-add-modern"
+                   href="{% url 'add_to_cart' item.id %}">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span>Thêm vào giỏ</span>
+                </a>
+
+            {% else %}
+
+                <span class="product-add-modern disabled">
+                    <i class="fas fa-box-open"></i>
+                    <span>Hết hàng</span>
+                </span>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</li>

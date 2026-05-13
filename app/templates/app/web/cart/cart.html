@@ -1,0 +1,286 @@
+{% extends "app/web/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Giỏ hàng | Book Store{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'app/css/web/pages/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="inner-section single-banner"
+         style="background: url('{% static 'app/images/single-banner.JPG' %}') no-repeat center / cover;">
+    <div class="container text-center">
+        <h2>Giỏ hàng của bạn</h2>
+
+        <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Trang chủ</a>
+            </li>
+            <li class="breadcrumb-item active">
+                Giỏ hàng
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="inner-section cart-part">
+    <div class="container">
+
+        <div class="cart-card">
+
+            <div class="cart-header">
+                <h4>Thông tin giỏ hàng</h4>
+
+                {% if totalCartQtySum != 0 %}
+                    <span class="cart-count-badge">
+                        {{ totalCartQtySum }} sản phẩm
+                    </span>
+                {% endif %}
+            </div>
+
+            {% if totalCartQtySum == 0 %}
+
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+
+                    <h3>Giỏ hàng của bạn đang trống</h3>
+
+                    <p>
+                        Hãy chọn thêm sách yêu thích để bắt đầu đặt hàng.
+                    </p>
+
+                    <a href="{% url 'home' %}" class="btn-main">
+                        Tiếp tục mua sắm
+                    </a>
+                </div>
+
+            {% else %}
+
+                <div class="table-scroll">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Thể loại</th>
+                                <th>Số lượng</th>
+                                <th>Tạm tính</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for item in cartItems %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ forloop.counter }}</strong>
+                                    </td>
+
+                                    <td>
+                                        <div class="cart-product">
+
+                                            {% if item.product.product_image %}
+                                                <img src="{{ item.product.product_image.url }}"
+                                                     alt="{{ item.product.product_name }}">
+                                            {% else %}
+                                                <img src="{% static 'app/images/error.png' %}"
+                                                     alt="No image">
+                                            {% endif %}
+
+                                            <div>
+                                                <h6>
+                                                    <a href="{% url 'product_detail' item.product.id %}">
+                                                        {{ item.product.product_name }}
+                                                    </a>
+                                                </h6>
+
+                                                <small>
+                                                    Còn lại: {{ item.left_quantity }}
+                                                </small>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <td class="cart-price">
+                                        {{ item.product.sale_price|floatformat:0 }} đ
+                                    </td>
+
+                                    <td>
+                                        {{ item.product.category.category_name }}
+                                    </td>
+
+                                    <td>
+                                        <div class="cart-qty">
+
+                                            <a href="{% url 'decrease_quantity' item.product.id %}"
+                                               class="qty-btn">
+                                                -
+                                            </a>
+
+                                            <form method="POST"
+                                                action="{% url 'update_quantity' item.product.id %}"
+                                                class="qty-form">
+
+                                                {% csrf_token %}
+
+                                                <input
+                                                    type="number"
+                                                    name="quantity"
+                                                    class="qty-input"
+                                                    min="1"
+                                                    max="{{ item.product.quantity }}"
+                                                    value="{{ item.quantity }}"
+                                                    onchange="this.form.submit()">
+
+                                            </form>
+
+                                            <a href="{% url 'increase_quantity' item.product.id %}"
+                                               class="qty-btn">
+                                                +
+                                            </a>
+
+                                        </div>
+
+                                        <div class="cart-stock">
+                                            Còn: {{ item.left_quantity }}
+                                        </div>
+                                    </td>
+
+                                    <td class="cart-total">
+                                        {{ item.get_sale_price|floatformat:0 }} đ
+                                    </td>
+
+                                    <td>
+                                        <div class="cart-action">
+
+                                            <a class="cart-view"
+                                               href="{% url 'product_detail' item.product.id %}"
+                                               title="Xem chi tiết">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+
+                                            <button type="button"
+                                                    class="cart-remove"
+                                                    title="Xóa sản phẩm"
+                                                    data-id="{{ item.product.id }}"
+                                                    data-name="{{ item.product.product_name }}"
+                                                    onclick="showConfigModalDialog(this.dataset.id, this.dataset.name)">
+                                                <i class="icofont-trash"></i>
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row justify-content-end mt-4">
+                    <div class="col-lg-5 col-md-7">
+
+                        <div class="cart-summary">
+                            <h4>Tổng thanh toán</h4>
+
+                            <ul class="cart-summary-list">
+                                <li>
+                                    <span>Tổng sản phẩm</span>
+                                    <strong>{{ totalCartQtySum }}</strong>
+                                </li>
+
+                                <li class="cart-summary-total">
+                                    <span>Tổng tiền</span>
+                                    <strong>{{ totalPrice|floatformat:0 }} đ</strong>
+                                </li>
+                            </ul>
+
+                            <div class="cart-summary-action">
+                                <a href="{% url 'home' %}" class="btn-outline">
+                                    Mua thêm
+                                </a>
+
+                                <a href="{% url 'checkout' %}" class="btn-main">
+                                    Thanh toán
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+</section>
+
+<div class="modal fade" id="configmationId" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content cart-modal">
+
+            <button type="button"
+                    class="modal-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Đóng">
+                <i class="icofont-close"></i>
+            </button>
+
+            <div class="modal-form">
+
+                <h5 class="modal-title">
+                    Xác nhận xoá
+                </h5>
+
+                <div class="modal-body">
+                    <p>
+                        Bạn có chắc muốn xoá sản phẩm
+                        "<span id="productName"></span>"
+                        khỏi giỏ hàng không?
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn-muted"
+                            data-bs-dismiss="modal">
+                        Huỷ
+                    </button>
+
+                    <a id="yesOption" class="btn-main">
+                        Có, xoá
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    function showConfigModalDialog(id, name) {
+
+        document.getElementById("productName").textContent = name;
+
+        document
+            .getElementById("yesOption")
+            .setAttribute("href", "/cart/remove/" + id + "/");
+
+        const modalElement =
+            document.getElementById("configmationId");
+
+        const modal =
+            new bootstrap.Modal(modalElement);
+
+        modal.show();
+    }
+</script>
+{% endblock js %}

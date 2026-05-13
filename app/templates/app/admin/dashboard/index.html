@@ -1,0 +1,299 @@
+{% extends "app/admin/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'app/css/admin/pages/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+    <!-- WELCOME -->
+    <div class="dashboard-welcome">
+        <div>
+            <span class="welcome-label">Welcome back</span>
+            <h2>Xin chào, {{ request.user.username }}</h2>
+            <p>Tổng quan hoạt động hệ thống bán sách hôm nay.</p>
+        </div>
+
+        <div class="welcome-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>{% now "d/m/Y" %}</span>
+        </div>
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="dashboard-stats">
+
+        <div class="dashboard-stat-card">
+            <div>
+                <span>Doanh thu</span>
+                <h3>{{ revenue|floatformat:0 }}đ</h3>
+                <small>Đơn hoàn thành</small>
+            </div>
+            <div class="stat-icon green">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div>
+                <span>Đơn hàng</span>
+                <h3>{{ total_orders }}</h3>
+                <small>Tổng đơn hàng</small>
+            </div>
+            <div class="stat-icon orange">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div>
+                <span>Khách hàng</span>
+                <h3>{{ total_customers }}</h3>
+                <small>Người mua</small>
+            </div>
+            <div class="stat-icon red">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div>
+                <span>Sản phẩm</span>
+                <h3>{{ total_products }}</h3>
+                <small>Đang kinh doanh</small>
+            </div>
+            <div class="stat-icon blue">
+                <i class="fas fa-book"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="dashboard-main-grid">
+
+        <!-- MAIN CHART -->
+        <div class="dashboard-card dashboard-chart-card">
+            <div class="dashboard-card-header">
+                <div>
+                    <h5>Revenue Analytics</h5>
+                    <p>Doanh thu 7 ngày gần đây</p>
+                </div>
+                <span>VNĐ</span>
+            </div>
+
+            <canvas id="revenueChart"></canvas>
+        </div>
+
+        <!-- SMALL WIDGETS -->
+        <div class="dashboard-side-widgets">
+
+            <div class="dashboard-card mini-widget">
+                <div class="mini-widget-icon purple">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <div>
+                    <h6>Mục tiêu tháng</h6>
+                    <strong>72%</strong>
+                    <div class="progress-line">
+                        <span style="width:72%"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card mini-widget">
+                <div class="mini-widget-icon green">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div>
+                    <h6>Tỉ lệ hoàn thành</h6>
+                    <strong>84%</strong>
+                    <p>Đơn hàng thành công</p>
+                </div>
+            </div>
+
+            <div class="dashboard-card mini-widget">
+                <div class="mini-widget-icon orange">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div>
+                    <h6>Cảnh báo</h6>
+                    <strong>{{ low_stock_count|default:0 }}</strong>
+                    <p>Sản phẩm sắp hết hàng</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM CONTENT -->
+    <div class="dashboard-bottom-grid">
+
+        <!-- RECENT ORDERS TABLE -->
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">
+                <div>
+                    <h5>Recent Orders</h5>
+                    <p>Đơn hàng mới nhất</p>
+                </div>
+                <a href="{% url 'admin_order' %}">Xem tất cả</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày tạo</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in recent_orders %}
+                        <tr>
+                            <td>#{{ item.id }}</td>
+
+                            <td>
+                                {% if item.customer %}
+                                    {{ item.customer.name }}
+                                {% else %}
+                                    Guest
+                                {% endif %}
+                            </td>
+
+                            <td class="price">
+                                {{ item.total_price|floatformat:0 }}đ
+                            </td>
+
+                            <td>
+                                {% if item.order_status == 'pending' %}
+                                    <span class="status-badge pending">Chờ xác nhận</span>
+                                {% elif item.order_status == 'confirmed' %}
+                                    <span class="status-badge confirmed">Đã xác nhận</span>
+                                {% elif item.order_status == 'shipping' %}
+                                    <span class="status-badge shipping">Đang giao</span>
+                                {% elif item.order_status == 'completed' %}
+                                    <span class="status-badge completed">Hoàn thành</span>
+                                {% else %}
+                                    <span class="status-badge cancelled">Đã hủy</span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ item.created_at|date:"d/m/Y H:i" }}</td>
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                Chưa có đơn hàng nào
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <!-- ACTIVITY FEED -->
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">
+                <div>
+                    <h5>Recent Activity</h5>
+                    <p>Hoạt động gần đây</p>
+                </div>
+            </div>
+
+            <div class="activity-feed">
+
+                <div class="activity-item">
+                    <span class="activity-dot green"></span>
+                    <div>
+                        <h6>Đơn hàng mới</h6>
+                        <p>Có đơn hàng vừa được tạo</p>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <span class="activity-dot blue"></span>
+                    <div>
+                        <h6>Sản phẩm</h6>
+                        <p>Danh sách sản phẩm đã được cập nhật</p>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <span class="activity-dot orange"></span>
+                    <div>
+                        <h6>Cảnh báo kho</h6>
+                        <p>Một số sản phẩm cần kiểm tra tồn kho</p>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <span class="activity-dot red"></span>
+                    <div>
+                        <h6>Thanh toán</h6>
+                        <p>Theo dõi các giao dịch gần đây</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const revenueChart = document.getElementById('revenueChart');
+
+    if (revenueChart) {
+        new Chart(revenueChart, {
+            type: 'line',
+            data: {
+                labels: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
+                datasets: [{
+                    label: 'Doanh thu',
+                    data: [1200000, 1800000, 1500000, 2400000, 2200000, 3100000, 2800000],
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString('vi-VN') + 'đ';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

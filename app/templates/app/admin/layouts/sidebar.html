@@ -1,0 +1,75 @@
+{% load static %}
+
+<aside class="admin-sidebar">
+
+    <!-- LOGO -->
+    <div class="admin-sidebar-logo">
+        <a href="{% url 'dashboard' %}">
+            <img src="{% static 'app/images/logo.png' %}" alt="Book Store">
+        </a>
+    </div>
+
+    <!-- MENU -->
+    <ul class="admin-sidebar-menu">
+
+        <!-- DASHBOARD -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'dashboard' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <!-- PRODUCT -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'admin_product' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'admin_product' %}active{% endif %}">
+                <i class="fas fa-book"></i>
+                <span>Sản phẩm</span>
+            </a>
+        </li>
+
+        <!-- CATEGORY -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'admin_category' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'admin_category' %}active{% endif %}">
+                <i class="fas fa-list"></i>
+                <span>Danh mục</span>
+            </a>
+        </li>
+
+        <!-- ORDER -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'admin_order' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'admin_order' %}active{% endif %}">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Đơn hàng</span>
+            </a>
+        </li>
+
+        <!-- CUSTOMER -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'admin_customer' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'admin_customer' %}active{% endif %}">
+                <i class="fas fa-users"></i>
+                <span>Khách hàng</span>
+            </a>
+        </li>
+
+    </ul>
+
+    <!-- BOTTOM -->
+    <div class="sidebar-bottom">
+
+        <!-- HOME -->
+        <a href="{% url 'home' %}" class="admin-sidebar-link">
+            <i class="fas fa-home"></i>
+            <span>Quay về trang chủ</span>
+        </a>
+
+        
+
+    </div>
+
+</aside>
