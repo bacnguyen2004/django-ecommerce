@@ -1,0 +1,211 @@
+{% extends "store/storefront/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Liên hệ | Book Library{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/storefront/pages/contact.css' %}?v=20260526-contact">
+{% endblock %}
+
+{% block content %}
+
+<main class="contact-page">
+
+    <section class="contact-hero"
+             style="background-image: linear-gradient(90deg, rgba(15, 23, 42, .78), rgba(47, 117, 83, .42)), url('{% static 'store/images/bookstore-hero.png' %}');">
+        <div class="container">
+            <div class="contact-hero-content">
+                <span>Book Library</span>
+                <h1>Liên hệ với chúng tôi</h1>
+                <p>Đội ngũ Book Library luôn sẵn sàng hỗ trợ đơn hàng, tư vấn sách và giải đáp mọi thắc mắc của bạn.</p>
+                <a href="#contact-form" class="contact-hero-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Gửi yêu cầu
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container contact-container">
+
+            <div class="contact-info-grid">
+                <a class="contact-info-card" href="https://maps.google.com/?q=Book%20Library" target="_blank" rel="noreferrer">
+                    <i class="icofont-location-pin"></i>
+                    <span>Địa chỉ</span>
+                    <strong>123 Nguyễn Trãi, Quận 1, TP. Hồ Chí Minh</strong>
+                </a>
+
+                <a class="contact-info-card" href="tel:0338515037">
+                    <i class="icofont-phone"></i>
+                    <span>Hotline</span>
+                    <strong>0338 515 037</strong>
+                </a>
+
+                <a class="contact-info-card" href="mailto:ttthinh2904@gmail.com">
+                    <i class="icofont-email"></i>
+                    <span>Email hỗ trợ</span>
+                    <strong>ttthinh2904@gmail.com</strong>
+                </a>
+            </div>
+
+            <div class="contact-main-grid">
+                <section class="contact-form-card" id="contact-form">
+                    <div class="contact-block-heading">
+                        <span>Hỗ trợ khách hàng</span>
+                        <h2>Gửi tin nhắn cho Book Library</h2>
+                        <p>Điền thông tin bên dưới, chúng tôi sẽ phản hồi trong thời gian sớm nhất.</p>
+                    </div>
+
+                    <form class="contact-form" method="POST" action="">
+                        {% csrf_token %}
+
+                        <div class="contact-form-row">
+                            <div class="form-group">
+                                <label for="contactName">Họ và tên</label>
+                                <input id="contactName"
+                                       class="form-control"
+                                       name="name"
+                                       type="text"
+                                       placeholder="Nguyễn Văn A">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contactEmail">Email</label>
+                                <input id="contactEmail"
+                                       class="form-control"
+                                       name="email"
+                                       type="email"
+                                       placeholder="email@example.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactSubject">Chủ đề</label>
+                            <input id="contactSubject"
+                                   class="form-control"
+                                   name="subject"
+                                   type="text"
+                                   placeholder="Tư vấn sách, đơn hàng, đổi trả...">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMessage">Nội dung</label>
+                            <textarea id="contactMessage"
+                                      class="form-control"
+                                      name="message"
+                                      rows="6"
+                                      placeholder="Bạn cần Book Library hỗ trợ điều gì?"></textarea>
+                        </div>
+
+                        <button type="submit" class="contact-submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Gửi tin nhắn
+                        </button>
+                    </form>
+                </section>
+
+                <aside class="contact-side-panel">
+                    <div class="contact-map-card">
+                        <div class="map-visual">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Book Library</span>
+                        </div>
+                        <div class="map-content">
+                            <h3>Ghé cửa hàng</h3>
+                            <p>123 Nguyễn Trãi, Quận 1, TP. Hồ Chí Minh</p>
+                            <a href="https://maps.google.com/?q=Book%20Library" target="_blank" rel="noreferrer">
+                                Mở bản đồ
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="opening-card">
+                        <h3>Giờ mở cửa</h3>
+                        <ul>
+                            <li>
+                                <span>Thứ 2 - Thứ 6</span>
+                                <strong>08:00 - 20:00</strong>
+                            </li>
+                            <li>
+                                <span>Thứ 7 - Chủ nhật</span>
+                                <strong>09:00 - 17:00</strong>
+                            </li>
+                            <li>
+                                <span>Ngày lễ</span>
+                                <strong>Nghỉ</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <section class="branch-section">
+                <div class="contact-block-heading center">
+                    <span>Hệ thống cửa hàng</span>
+                    <h2>Chi nhánh Book Library</h2>
+                    <p>Chọn chi nhánh gần bạn để nhận sách nhanh hơn.</p>
+                </div>
+
+                <div class="branch-grid">
+                    <article class="branch-card">
+                        <img src="{% static 'store/images/branch/01.jpg' %}" alt="Chi nhánh Quận 1">
+                        <div>
+                            <h3>Quận 1</h3>
+                            <p>123 Nguyễn Trãi, TP. Hồ Chí Minh</p>
+                        </div>
+                    </article>
+
+                    <article class="branch-card">
+                        <img src="{% static 'store/images/branch/02.jpg' %}" alt="Chi nhánh Thủ Đức">
+                        <div>
+                            <h3>Thủ Đức</h3>
+                            <p>45 Võ Văn Ngân, TP. Hồ Chí Minh</p>
+                        </div>
+                    </article>
+
+                    <article class="branch-card">
+                        <img src="{% static 'store/images/branch/03.jpg' %}" alt="Chi nhánh Đà Nẵng">
+                        <div>
+                            <h3>Đà Nẵng</h3>
+                            <p>12 Bạch Đằng, Hải Châu</p>
+                        </div>
+                    </article>
+
+                    <article class="branch-card">
+                        <img src="{% static 'store/images/branch/04.jpg' %}" alt="Chi nhánh Hà Nội">
+                        <div>
+                            <h3>Hà Nội</h3>
+                            <p>88 Cầu Giấy, Hà Nội</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+        </div>
+    </section>
+
+    <section class="contact-newsletter"
+             style="background-image: linear-gradient(90deg, rgba(47, 117, 83, .94), rgba(15, 23, 42, .82)), url('{% static 'store/images/bookstore-hero.png' %}');">
+        <div class="container">
+            <div class="newsletter-layout">
+                <div>
+                    <span>Ưu đãi thành viên</span>
+                    <h2>Nhận thông tin sách mới mỗi tuần</h2>
+                    <p>Đăng ký để cập nhật sách mới, mã giảm giá và gợi ý đọc phù hợp.</p>
+                </div>
+
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Nhập email của bạn">
+                    <button type="submit">
+                        <i class="icofont-ui-email"></i>
+                        Đăng ký
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+{% endblock content %}

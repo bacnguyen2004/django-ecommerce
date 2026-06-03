@@ -1,0 +1,77 @@
+﻿{% load static %}
+
+<aside class="admin-sidebar" id="adminSidebar">
+
+    <!-- LOGO -->
+    <div class="admin-sidebar-logo">
+        <a href="{% url 'dashboard' %}">
+            <img src="{% static 'store/images/logo.png' %}" alt="Online Store">
+        </a>
+    </div>
+
+    <!-- MENU -->
+    <ul class="admin-sidebar-menu">
+
+        <!-- DASHBOARD -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'dashboard' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <!-- PRODUCT -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'admin_product' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'admin_product' or request.resolver_match.url_name == 'add_product' or request.resolver_match.url_name == 'edit_product' %}active{% endif %}">
+                <i class="fas fa-box-open"></i>
+                <span>Sản phẩm</span>
+            </a>
+        </li>
+
+        <!-- CATEGORY -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'admin_category' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'admin_category' or request.resolver_match.url_name == 'add_category' or request.resolver_match.url_name == 'edit_category' %}active{% endif %}">
+                <i class="fas fa-list"></i>
+                <span>Danh mục</span>
+            </a>
+        </li>
+
+        <!-- ORDER -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'admin_order' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'admin_order' or request.resolver_match.url_name == 'admin_order_detail' %}active{% endif %}">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Đơn hàng</span>
+            </a>
+        </li>
+
+        <!-- CUSTOMER -->
+        <li class="admin-sidebar-item">
+            <a href="{% url 'admin_customer' %}"
+               class="admin-sidebar-link {% if request.resolver_match.url_name == 'admin_customer' or request.resolver_match.url_name == 'customer_detail' or request.resolver_match.url_name == 'edit_customer' %}active{% endif %}">
+                <i class="fas fa-users"></i>
+                <span>Khách hàng</span>
+            </a>
+        </li>
+
+    </ul>
+
+    <!-- BOTTOM -->
+    <div class="sidebar-bottom">
+
+        <!-- HOME -->
+        <a href="{% url 'home' %}" class="admin-sidebar-link">
+            <i class="fas fa-home"></i>
+            <span>Quay về trang chủ</span>
+        </a>
+
+        
+
+    </div>
+
+</aside>
+
+

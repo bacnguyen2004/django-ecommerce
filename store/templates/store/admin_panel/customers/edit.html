@@ -1,0 +1,88 @@
+﻿{% extends "store/admin_panel/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Chỉnh sửa khách hàng{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/admin_panel/pages/customer.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="customer-page">
+
+    <div class="customer-topbar">
+        <div>
+            <span class="page-label">Edit Customer</span>
+            <h2>Chỉnh sửa khách hàng</h2>
+            <p>Cập nhật thông tin và quyền truy cập tài khoản</p>
+        </div>
+
+        <a href="{% url 'admin_customer' %}" class="btn-customer-back">
+            <i class="fas fa-arrow-left"></i>
+            Quay lại
+        </a>
+    </div>
+
+    <div class="customer-form-wrapper">
+        <form method="POST" class="customer-card">
+            {% csrf_token %}
+
+            <div class="card-head">
+                <h5>{{ customer.user.username }}</h5>
+                <p>{{ customer.user.email|default:"Chưa có email" }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>Họ tên</label>
+                <input type="text"
+                       name="name"
+                       class="form-control"
+                       value="{{ customer.name|default:'' }}"
+                       placeholder="Nhập họ tên">
+            </div>
+
+            <div class="form-group">
+                <label>Số điện thoại</label>
+                <input type="text"
+                       name="phone"
+                       class="form-control"
+                       value="{{ customer.phone|default:'' }}"
+                       placeholder="Nhập số điện thoại">
+            </div>
+
+            <div class="form-group">
+                <label>Vai trò</label>
+                <select name="role" class="form-control">
+                    <option value="customer" {% if customer.role == 'customer' %}selected{% endif %}>
+                        Khách hàng
+                    </option>
+                    <option value="staff" {% if customer.role == 'staff' %}selected{% endif %}>
+                        Nhân viên
+                    </option>
+                    <option value="admin" {% if customer.role == 'admin' %}selected{% endif %}>
+                        Admin
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group customer-switch">
+                <input type="checkbox"
+                       id="status"
+                       name="status"
+                       {% if customer.status %}checked{% endif %}>
+                <label for="status">Tài khoản đang hoạt động</label>
+            </div>
+
+            <button type="submit" class="btn-customer-save">
+                <i class="fas fa-save"></i>
+                Lưu thay đổi
+            </button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
+
+

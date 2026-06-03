@@ -1,0 +1,593 @@
+.home-page {
+    background: #f5f7fa;
+    color: #0f172a;
+}
+
+.home-page .container {
+    max-width: 1180px;
+}
+
+/* HERO */
+
+.home-hero {
+    padding: 24px 0 18px;
+}
+
+.home-index-slider {
+    overflow: hidden;
+    border-radius: 8px;
+    background: #102018;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, .12);
+}
+
+.hero-slide {
+    position: relative;
+    min-height: 430px;
+    color: #fff;
+}
+
+.hero-slide__media {
+    position: absolute;
+    inset: 0;
+}
+
+.hero-slide__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(15, 23, 42, .82) 0%, rgba(15, 23, 42, .48) 45%, rgba(15, 23, 42, .16) 100%);
+}
+
+.hero-slide__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-slide__content {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+    padding: 62px 52px;
+}
+
+.hero-slide__content span,
+.section-heading-modern span,
+.section-heading-row span,
+.deal-content span,
+.newsletter-box span,
+.mini-banner span {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #2f7553;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.hero-slide__content span,
+.deal-content span,
+.mini-banner span {
+    color: #bbf7d0;
+}
+
+.hero-slide__content h1 {
+    margin: 0 0 14px;
+    color: #fff;
+    font-size: 46px;
+    font-weight: 900;
+    line-height: 1.1;
+}
+
+.hero-slide__content p {
+    max-width: 500px;
+    margin: 0 0 24px;
+    color: rgba(255, 255, 255, .88);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.hero-btn {
+    min-height: 44px;
+    padding: 11px 18px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.hero-btn.primary {
+    background: #2f7553;
+    color: #fff;
+}
+
+.hero-btn.light {
+    border: 1px solid rgba(255, 255, 255, .62);
+    background: rgba(255, 255, 255, .14);
+    color: #fff;
+}
+
+.hero-btn:hover {
+    background: #276244;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* BENEFITS */
+
+.home-benefits {
+    padding: 18px 0 34px;
+}
+
+.benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.benefit-card,
+.category-card,
+.inspiration-card,
+.newsletter-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, .05);
+}
+
+.benefit-card {
+    min-height: 96px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.benefit-card i,
+.inspiration-card i {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 8px;
+    background: #dcfce7;
+    color: #2f7553;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.benefit-card h5,
+.inspiration-card h3,
+.category-card h5 {
+    margin: 0;
+    color: #0f172a;
+    font-weight: 900;
+}
+
+.benefit-card h5 {
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+
+.benefit-card p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+/* SECTIONS */
+
+.home-section,
+.deal-section,
+.inspiration-section,
+.newsletter-modern {
+    padding: 48px 0;
+}
+
+.section-soft,
+.newsletter-modern {
+    background: #fff;
+}
+
+.section-heading-modern {
+    max-width: 640px;
+    margin: 0 auto 24px;
+    text-align: center;
+}
+
+.section-heading-row {
+    margin-bottom: 22px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.section-heading-modern h2,
+.section-heading-row h2,
+.deal-content h2,
+.newsletter-box h2 {
+    margin: 0 0 6px;
+    color: #0f172a;
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1.25;
+}
+
+.section-heading-modern p,
+.section-heading-row p,
+.deal-content p,
+.newsletter-box p,
+.inspiration-card p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.view-all-btn {
+    min-height: 40px;
+    padding: 10px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+    color: #2f7553;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.view-all-btn:hover {
+    border-color: #2f7553;
+    background: #2f7553;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* SLICK LISTS */
+
+.category-carousel,
+.product-slider {
+    margin: 0 -8px;
+    padding: 0;
+    list-style: none;
+}
+
+.category-carousel .slick-list,
+.product-slider .slick-list {
+    padding: 4px 0 10px;
+}
+
+.category-carousel .slick-slide,
+.product-slider .slick-slide {
+    height: auto;
+}
+
+.category-carousel li,
+.product-slider li {
+    padding: 0 8px;
+}
+
+.product-slider .product-card-item {
+    height: 100%;
+}
+
+.product-slider .product-card-modern {
+    height: 100%;
+}
+
+.category-card {
+    min-height: 168px;
+    padding: 16px;
+    color: #0f172a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.category-card:hover {
+    color: #0f172a;
+    text-decoration: none;
+}
+
+.category-card img {
+    width: 76px;
+    height: 76px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.category-card h5 {
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+
+.category-card span {
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* MINI BANNERS */
+
+.home-banner-strip {
+    padding: 10px 0 36px;
+}
+
+.banner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.mini-banner {
+    min-height: 140px;
+    padding: 20px;
+    border-radius: 8px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.mini-banner.green {
+    background: linear-gradient(135deg, #2f7553, #16a34a);
+}
+
+.mini-banner.navy {
+    background: linear-gradient(135deg, #0f172a, #2563eb);
+}
+
+.mini-banner.red {
+    background: linear-gradient(135deg, #7f1d1d, #ef4444);
+}
+
+.mini-banner:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.mini-banner h3 {
+    margin: 0 0 5px;
+    color: #fff;
+    font-size: 21px;
+    font-weight: 900;
+}
+
+.mini-banner p {
+    margin: 0;
+    color: rgba(255, 255, 255, .88);
+    font-size: 14px;
+}
+
+/* DEAL */
+
+.deal-card {
+    padding: 30px;
+    border-radius: 8px;
+    background: #0f172a;
+    color: #fff;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 470px);
+    gap: 24px;
+    align-items: center;
+}
+
+.deal-content h2 {
+    color: #fff;
+    font-size: 32px;
+}
+
+.deal-content p {
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, .82);
+}
+
+.deal-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.deal-gallery img {
+    width: 100%;
+    height: 220px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* INSPIRATION + NEWSLETTER */
+
+.inspiration-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.inspiration-card {
+    padding: 22px;
+}
+
+.inspiration-card i {
+    margin-bottom: 14px;
+}
+
+.inspiration-card h3 {
+    margin-bottom: 8px;
+    font-size: 19px;
+}
+
+.newsletter-box {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 440px);
+    gap: 24px;
+    align-items: center;
+}
+
+.newsletter-form {
+    min-height: 54px;
+    padding: 6px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    display: flex;
+    gap: 8px;
+}
+
+.newsletter-form input {
+    min-width: 0;
+    flex: 1;
+    border: 0;
+    background: transparent;
+    padding: 0 14px;
+    color: #0f172a;
+    font-weight: 700;
+    outline: none;
+}
+
+.newsletter-form button {
+    min-width: 120px;
+    border: 0;
+    border-radius: 8px;
+    background: #2f7553;
+    color: #fff;
+    font-weight: 900;
+}
+
+.empty-inline {
+    padding: 18px;
+    color: #64748b;
+    list-style: none;
+}
+
+/* ARROWS */
+
+.slider-arrow .slick-arrow {
+    z-index: 5;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #fff;
+    color: #2f7553;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, .16);
+}
+
+.slider-arrow .slick-arrow:hover {
+    background: #2f7553;
+    color: #fff;
+}
+
+.home-index-slider .slick-arrow {
+    background: rgba(255, 255, 255, .92);
+}
+
+@media (max-width: 991px) {
+    .hero-slide {
+        min-height: 400px;
+    }
+
+    .hero-slide__content {
+        padding: 48px 30px;
+    }
+
+    .hero-slide__content h1 {
+        font-size: 38px;
+    }
+
+    .benefit-grid,
+    .banner-grid,
+    .inspiration-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .deal-card,
+    .newsletter-box {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 575px) {
+    .home-hero {
+        padding-top: 14px;
+    }
+
+    .hero-slide {
+        min-height: 390px;
+    }
+
+    .hero-slide__media::after {
+        background: rgba(15, 23, 42, .72);
+    }
+
+    .hero-slide__content {
+        padding: 36px 20px;
+    }
+
+    .hero-slide__content h1 {
+        font-size: 30px;
+    }
+
+    .hero-slide__content p {
+        font-size: 14px;
+    }
+
+    .benefit-grid,
+    .banner-grid,
+    .inspiration-grid,
+    .deal-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .home-section,
+    .deal-section,
+    .inspiration-section,
+    .newsletter-modern {
+        padding: 34px 0;
+    }
+
+    .deal-card,
+    .newsletter-box {
+        padding: 20px;
+    }
+
+    .deal-gallery img {
+        height: 180px;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
+        min-height: 44px;
+    }
+}

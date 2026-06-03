@@ -1,0 +1,352 @@
+﻿{% extends "store/admin_panel/layouts/base.html" %}
+{% load static %}
+
+{% block title %}
+Chi tiết đơn hàng
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{% static 'store/css/admin_panel/pages/order.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="order-page">
+
+    <!-- TOP -->
+    <div class="order-topbar">
+
+        <div>
+
+            <span class="page-label">
+                Order Detail
+            </span>
+
+            <h2>
+                Đơn hàng #{{ order.id }}
+            </h2>
+
+            <p>
+                Theo dõi và quản lý thông tin đơn hàng
+            </p>
+
+        </div>
+
+        <div class="topbar-actions">
+
+            <span class="status-chip status-{{ order.status }}">
+                {{ order.get_status_display }}
+            </span>
+
+            <a href="{% url 'admin_order' %}"
+               class="btn-back">
+
+                <i class="fas fa-arrow-left"></i>
+
+                Quay lại
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+    <div class="order-layout">
+
+        <!-- LEFT -->
+        <div class="order-left">
+
+            <!-- STATUS -->
+            <div class="order-card">
+
+                <div class="card-head">
+
+                    <div>
+
+                        <h5>
+                            Trạng thái đơn hàng
+                        </h5>
+
+                        <p>
+                            Cập nhật tiến trình xử lý đơn hàng
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <form method="POST"
+                      action="{% url 'update_order_status' order.id %}">
+
+                    {% csrf_token %}
+
+                    <div class="status-form">
+
+                        <select name="status"
+                                class="form-control">
+
+                            <option value="pending"
+                                {% if order.status == 'pending' %}
+                                selected
+                                {% endif %}>
+                                Chờ xác nhận
+                            </option>
+
+                            <option value="confirmed"
+                                {% if order.status == 'confirmed' %}
+                                selected
+                                {% endif %}>
+                                Đã xác nhận
+                            </option>
+
+                            <option value="shipping"
+                                {% if order.status == 'shipping' %}
+                                selected
+                                {% endif %}>
+                                Đang giao
+                            </option>
+
+                            <option value="completed"
+                                {% if order.status == 'completed' %}
+                                selected
+                                {% endif %}>
+                                Hoàn thành
+                            </option>
+
+                            <option value="cancelled"
+                                {% if order.status == 'cancelled' %}
+                                selected
+                                {% endif %}>
+                                Đã hủy
+                            </option>
+
+                        </select>
+
+                        <button type="submit"
+                                class="btn-save">
+
+                            <i class="fas fa-save"></i>
+
+                            Cập nhật
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- PRODUCTS -->
+            <div class="order-card">
+
+                <div class="card-head">
+
+                    <div>
+
+                        <h5>
+                            Sản phẩm trong đơn
+                        </h5>
+
+                        <p>
+                            Danh sách sản phẩm khách đã đặt
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table product-table">
+
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>SL</th>
+                                <th>Đơn giá</th>
+                                <th>Tổng</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in order_items %}
+                            <tr>
+
+                                <td>
+
+                                    <div class="product-item">
+
+                                        {% if item.product and item.product.product_image %}
+
+                                            <img src="{{ item.product.product_image.url }}"
+                                                 class="product-thumb">
+
+                                        {% endif %}
+
+                                        <div>
+
+                                            <h6>
+                                                {% if item.product %}
+                                                    {{ item.product.product_name }}
+                                                {% else %}
+                                                    Sản phẩm đã xoá
+                                                {% endif %}
+                                            </h6>
+
+                                            <small>
+                                                {% if item.product and item.product.category %}
+                                                    {{ item.product.category.category_name }}
+                                                {% else %}
+                                                    Chưa có danh mục
+                                                {% endif %}
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>
+                                    {{ item.quantity }}
+                                </td>
+
+                                <td>
+                                    {{ item.price|floatformat:0 }} đ
+                                </td>
+
+                                <td class="price">
+                                    {{ item.get_sale_price|floatformat:0 }} đ
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+        <div class="order-right">
+
+            <!-- CUSTOMER -->
+            <div class="order-card">
+
+                <div class="card-head">
+                    <h5>Khách hàng</h5>
+                </div>
+
+                <div class="info-group">
+
+                    <div class="info-item">
+                        <span>Tên khách hàng</span>
+                        <strong>
+                            {{ order.customer.name }}
+                        </strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Số điện thoại</span>
+                        <strong>
+                            {{ order.customer.phone }}
+                        </strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Tài khoản</span>
+                        <strong>
+                            {{ order.customer.user.username }}
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SHIPPING -->
+            <div class="order-card">
+
+                <div class="card-head">
+                    <h5>Thông tin giao hàng</h5>
+                </div>
+
+                <div class="info-group">
+
+                    <div class="info-item">
+                        <span>Người nhận</span>
+                        <strong>
+                            {{ shipping.full_name }}
+                        </strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Số điện thoại</span>
+                        <strong>
+                            {{ shipping.phone }}
+                        </strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Địa chỉ</span>
+                        <strong>
+                            {{ shipping.address }}
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="order-summary">
+
+                <div class="summary-top">
+
+                    <span>Tổng thanh toán</span>
+
+                    <h3>
+                        {{ order.total_price|floatformat:0 }} đ
+                    </h3>
+
+                </div>
+
+                <div class="summary-stats">
+
+                    <div>
+                        <span>Sản phẩm</span>
+                        <strong>{{ order.total_items }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Trạng thái</span>
+                        <strong>{{ order.get_status_display }}</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

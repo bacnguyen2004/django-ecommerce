@@ -1,0 +1,276 @@
+{% extends "store/storefront/layouts/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/storefront/pages/home.css' %}?v=20260526-home-css2">
+{% endblock %}
+
+{% block slider %}
+{% endblock slider %}
+
+{% block content %}
+
+<main class="home-page">
+
+    <section class="home-hero">
+        <div class="container">
+            <div class="home-index-slider slider-arrow">
+
+                <div class="hero-slide">
+                    <div class="hero-slide__media">
+                        <img src="{% static 'store/images/bookstore-hero.png' %}" alt="Không gian mua sắm">
+                    </div>
+                    <div class="hero-slide__content">
+                        <span>Mua sắm thông minh</span>
+                        <h1>Chọn nhanh sản phẩm bạn cần</h1>
+                        <p>Khám phá sản phẩm mới, ưu đãi nổi bật và các danh mục đang được quan tâm.</p>
+                        <div class="hero-actions">
+                            <a href="{% url 'product_list' %}" class="hero-btn primary">Mua ngay</a>
+                            <a href="#categories" class="hero-btn light">Xem danh mục</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-slide">
+                    <div class="hero-slide__media">
+                        <img src="{% static 'store/images/home_slider_image_2.jpg' %}" alt="Ưu đãi mỗi ngày">
+                    </div>
+                    <div class="hero-slide__content">
+                        <span>Deal mỗi ngày</span>
+                        <h1>Ưu đãi tốt cho mọi nhu cầu</h1>
+                        <p>Cập nhật các mặt hàng giảm giá, combo tiết kiệm và sản phẩm đáng chú ý.</p>
+                        <div class="hero-actions">
+                            <a href="#discount-products" class="hero-btn primary">Xem khuyến mãi</a>
+                            <a href="#featured-products" class="hero-btn light">Sản phẩm nổi bật</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-slide">
+                    <div class="hero-slide__media">
+                        <img src="{% static 'store/images/home_slider_image_3.jpg' %}" alt="Sản phẩm mới">
+                    </div>
+                    <div class="hero-slide__content">
+                        <span>Hàng mới cập nhật</span>
+                        <h1>Gợi ý mới cho hôm nay</h1>
+                        <p>Duyệt nhanh các sản phẩm vừa lên kệ và chọn món phù hợp chỉ trong vài phút.</p>
+                        <div class="hero-actions">
+                            <a href="#new-products" class="hero-btn primary">Xem hàng mới</a>
+                            <a href="{% url 'contact' %}" class="hero-btn light">Cần tư vấn?</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="home-benefits">
+        <div class="container">
+            <div class="benefit-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-shipping-fast"></i>
+                    <div>
+                        <h5>Giao nhanh</h5>
+                        <p>Đóng gói kỹ, nhận hàng tận nơi</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <h5>Sản phẩm uy tín</h5>
+                        <p>Thông tin rõ ràng, dễ chọn</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-tags"></i>
+                    <div>
+                        <h5>Ưu đãi tốt</h5>
+                        <p>Nhiều chương trình giảm giá</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-headset"></i>
+                    <div>
+                        <h5>Hỗ trợ nhanh</h5>
+                        <p>Tư vấn trước và sau mua</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-section" id="categories">
+        <div class="container">
+            <div class="section-heading-modern">
+                <span>Danh mục</span>
+                <h2>Mua sắm theo nhu cầu</h2>
+                <p>Lướt nhanh các nhóm sản phẩm đang có trong cửa hàng.</p>
+            </div>
+
+            <ul class="category-slider category-carousel slider-arrow">
+                {% for category in categories %}
+                    <li>
+                        <a class="category-card" href="{% url 'product_list' %}?category={{ category.id }}">
+                            {% if category.category_image %}
+                                <img src="{{ category.category_image.url }}"
+                                     alt="{{ category.category_name }}"
+                                     data-fallback="{% static 'store/images/book-placeholder.png' %}"
+                                     onerror="this.onerror=null; this.src=this.dataset.fallback;">
+                            {% else %}
+                                <img src="{% static 'store/images/book-placeholder.png' %}" alt="Chưa có ảnh">
+                            {% endif %}
+                            <h5>{{ category.category_name }}</h5>
+                            <span>{{ category.active_product_count }} sản phẩm</span>
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="empty-inline">Chưa có danh mục nào</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <section class="home-banner-strip">
+        <div class="container">
+            <div class="banner-grid">
+                <a class="mini-banner green" href="{% url 'product_list' %}?sort=discount">
+                    <span>Flash sale</span>
+                    <h3>Giảm giá nổi bật</h3>
+                    <p>Săn deal tốt trong ngày</p>
+                </a>
+                <a class="mini-banner navy" href="#new-products">
+                    <span>Mới lên kệ</span>
+                    <h3>Sản phẩm mới</h3>
+                    <p>Cập nhật liên tục</p>
+                </a>
+                <a class="mini-banner red" href="{% url 'contact' %}">
+                    <span>Tư vấn</span>
+                    <h3>Cần hỗ trợ?</h3>
+                    <p>Liên hệ cửa hàng</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-section section-soft" id="new-products">
+        <div class="container">
+            <div class="section-heading-row">
+                <div>
+                    <span>Sản phẩm mới</span>
+                    <h2>Vừa cập nhật</h2>
+                    <p>Các sản phẩm mới nhất trong hệ thống.</p>
+                </div>
+                <a href="{% url 'product_list' %}" class="view-all-btn">Xem tất cả</a>
+            </div>
+
+            <ul class="product-slider new-slider slider-arrow">
+                {% for item in newProducts %}
+                    {% include 'store/storefront/components/product-card.html' with item=item label='Mới' %}
+                {% empty %}
+                    <li class="empty-inline">Chưa có sản phẩm mới</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <section class="deal-section">
+        <div class="container">
+            <div class="deal-card">
+                <div class="deal-content">
+                    <span>Combo & deal</span>
+                    <h2>Chọn nhanh, mua gọn, giá tốt hơn</h2>
+                    <p>Gợi ý sản phẩm đang có ưu đãi để bạn tiết kiệm thời gian khi mua sắm.</p>
+                    <a href="#discount-products" class="hero-btn primary">Xem deal ngay</a>
+                </div>
+                <div class="deal-gallery">
+                    <img src="{% static 'store/images/promo/home/111.jpg' %}" alt="Deal nổi bật">
+                    <img src="{% static 'store/images/promo/home/113.jpg' %}" alt="Sản phẩm ưu đãi">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-section" id="featured-products">
+        <div class="container">
+            <div class="section-heading-row">
+                <div>
+                    <span>Nổi bật</span>
+                    <h2>Được quan tâm</h2>
+                    <p>Những sản phẩm được ưu tiên hiển thị trong cửa hàng.</p>
+                </div>
+                <a href="{% url 'product_list' %}" class="view-all-btn">Khám phá thêm</a>
+            </div>
+
+            <ul class="product-slider new-slider slider-arrow">
+                {% for item in featuredProducts %}
+                    {% include 'store/storefront/components/product-card.html' with item=item label='Nổi bật' %}
+                {% empty %}
+                    <li class="empty-inline">Chưa có sản phẩm nổi bật</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <section class="home-section section-soft" id="discount-products">
+        <div class="container">
+            <div class="section-heading-row">
+                <div>
+                    <span>Khuyến mãi</span>
+                    <h2>Đang giảm giá</h2>
+                    <p>Các lựa chọn giá tốt đang được cập nhật.</p>
+                </div>
+                <a href="{% url 'product_list' %}?sort=discount" class="view-all-btn">Xem sale</a>
+            </div>
+
+            <ul class="product-slider new-slider slider-arrow">
+                {% for item in discountProducts %}
+                    {% include 'store/storefront/components/product-card.html' with item=item label='Sale' %}
+                {% empty %}
+                    <li class="empty-inline">Chưa có sản phẩm khuyến mãi</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <section class="inspiration-section">
+        <div class="container">
+            <div class="inspiration-grid">
+                <div class="inspiration-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>Gợi ý quà tặng</h3>
+                    <p>Chọn sản phẩm phù hợp cho bạn bè, gia đình hoặc đồng nghiệp.</p>
+                </div>
+                <div class="inspiration-card">
+                    <i class="fas fa-fire"></i>
+                    <h3>Xu hướng tuần này</h3>
+                    <p>Các lựa chọn được khách hàng chú ý và thêm vào giỏ nhiều hơn.</p>
+                </div>
+                <div class="inspiration-card">
+                    <i class="fas fa-wallet"></i>
+                    <h3>Mua tiết kiệm</h3>
+                    <p>Theo dõi ưu đãi, giá tốt và chương trình giảm giá đang chạy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter-modern">
+        <div class="container">
+            <div class="newsletter-box">
+                <div>
+                    <span>Đừng bỏ lỡ</span>
+                    <h2>Nhận thông tin sản phẩm mới và ưu đãi</h2>
+                    <p>Đăng ký email để cập nhật chương trình mới nhất từ cửa hàng.</p>
+                </div>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Nhập email của bạn">
+                    <button type="button">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+﻿/* =========================
+   FORM COMMON
+========================= */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.form-control,
+.form-select,
+.form-textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--text);
+    font-size: 14px;
+    padding: 12px 14px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(47, 107, 79, 0.12);
+}
+
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-control::placeholder,
+.form-textarea::placeholder {
+    color: #aaaaaa;
+}
+
+/* =========================
+   FORM CHECKBOX / RADIO
+========================= */
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-check input {
+    accent-color: var(--primary);
+}
+
+.form-check label {
+    font-size: 14px;
+    color: var(--text);
+}
+
+/* =========================
+   FORM ERROR
+========================= */
+
+.form-error {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #e63b3b;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid,
+.form-textarea.is-invalid {
+    border-color: #e63b3b;
+}
+
+/* =========================
+   FORM CARD
+========================= */
+
+.form-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px;
+}
+

@@ -1,0 +1,171 @@
+{% extends "store/storefront/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Tất cả sản phẩm | Book Library{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/storefront/pages/product-list.css' %}?v=20260526-rebuild">
+{% endblock %}
+
+{% block content %}
+
+<main class="shop-page">
+    <div class="container shop-container">
+
+        <header class="shop-header">
+            <div>
+                <span class="shop-eyebrow">Book Library</span>
+                <h1>Tất cả sản phẩm</h1>
+                <p>Khám phá các đầu sách đang có trong cửa hàng.</p>
+            </div>
+        </header>
+
+        <section class="shop-toolbar" aria-label="Bộ lọc sản phẩm">
+            <div class="shop-result-count">
+                <i class="fas fa-book-open"></i>
+                <span>{{ products.paginator.count }} sản phẩm</span>
+            </div>
+
+            <div class="shop-sort">
+                <label for="sortProduct">Sắp xếp</label>
+                <select id="sortProduct" onchange="handleSortChange(this.value)">
+                    <option value="newest" {% if sort == "newest" %}selected{% endif %}>
+                        Mới nhất
+                    </option>
+                    <option value="price_asc" {% if sort == "price_asc" %}selected{% endif %}>
+                        Giá thấp đến cao
+                    </option>
+                    <option value="price_desc" {% if sort == "price_desc" %}selected{% endif %}>
+                        Giá cao đến thấp
+                    </option>
+                    <option value="discount" {% if sort == "discount" %}selected{% endif %}>
+                        Đang giảm giá
+                    </option>
+                </select>
+            </div>
+        </section>
+
+        {% if products %}
+            <section class="shop-grid" aria-label="Danh sách sản phẩm">
+                {% for item in products %}
+                    <article class="shop-product-card">
+                        <div class="shop-product-media">
+                            <a href="{% url 'product_detail' item.id %}" aria-label="Xem {{ item.product_name }}">
+                                {% if item.product_image %}
+                                    <img src="{{ item.product_image.url }}"
+                                         alt="{{ item.product_name }}"
+                                         loading="lazy"
+                                         decoding="async"
+                                         data-fallback="{% static 'store/images/book-placeholder.png' %}"
+                                         onerror="this.onerror=null; this.src=this.dataset.fallback; this.classList.add('is-fallback');">
+                                {% else %}
+                                    <img src="{% static 'store/images/book-placeholder.png' %}"
+                                         alt="Chưa có ảnh"
+                                         loading="lazy"
+                                         decoding="async"
+                                         class="is-fallback">
+                                {% endif %}
+                            </a>
+
+                            {% if item.quantity <= 0 %}
+                                <span class="shop-badge muted">Hết hàng</span>
+                            {% elif item.discount > 0 %}
+                                <span class="shop-badge sale">-{{ item.discount }}%</span>
+                            {% endif %}
+
+                            <a href="{% url 'add_wishlist' item.id %}"
+                               class="shop-wishlist {% if item.id in wishlist_product_ids %}active{% endif %}"
+                               aria-label="Thêm {{ item.product_name }} vào yêu thích">
+                                <i class="fas fa-heart"></i>
+                            </a>
+                        </div>
+
+                        <div class="shop-product-body">
+                            <div class="shop-rating" aria-label="Đánh giá 4.5 sao">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5</span>
+                            </div>
+
+                            <h2>
+                                <a href="{% url 'product_detail' item.id %}">
+                                    {{ item.product_name }}
+                                </a>
+                            </h2>
+
+                            <div class="shop-price">
+                                {% if item.discount > 0 %}
+                                    <del>{{ item.price|floatformat:0 }} đ</del>
+                                    <strong>{{ item.sale_price|floatformat:0 }} đ</strong>
+                                {% else %}
+                                    <strong>{{ item.price|floatformat:0 }} đ</strong>
+                                {% endif %}
+                            </div>
+
+                            {% if item.quantity > 0 %}
+                                <a href="{% url 'add_to_cart' item.id %}" class="shop-cart-btn">
+                                    <i class="fas fa-shopping-basket"></i>
+                                    <span>Thêm vào giỏ</span>
+                                </a>
+                            {% else %}
+                                <span class="shop-cart-btn disabled">
+                                    <i class="fas fa-box-open"></i>
+                                    <span>Hết hàng</span>
+                                </span>
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        {% else %}
+            <section class="shop-empty">
+                <i class="fas fa-box-open"></i>
+                <h2>Chưa có sản phẩm nào</h2>
+                <p>Vui lòng quay lại sau.</p>
+            </section>
+        {% endif %}
+
+        {% if products.paginator.num_pages > 1 %}
+            <nav class="shop-pagination" aria-label="Phân trang sản phẩm">
+                {% if products.has_previous %}
+                    <a href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ products.previous_page_number }}">
+                        Trước
+                    </a>
+                {% endif %}
+
+                {% for num in products.paginator.page_range %}
+                    {% if products.number == num %}
+                        <span class="active">{{ num }}</span>
+                    {% else %}
+                        <a href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ num }}">
+                            {{ num }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if products.has_next %}
+                    <a href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ products.next_page_number }}">
+                        Sau
+                    </a>
+                {% endif %}
+            </nav>
+        {% endif %}
+
+    </div>
+</main>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    function handleSortChange(value) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("sort", value);
+        url.searchParams.delete("page");
+        window.location.href = url.toString();
+    }
+</script>
+{% endblock js %}

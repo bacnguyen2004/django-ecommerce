@@ -1,0 +1,148 @@
+﻿{% extends "store/storefront/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Wishlist | Online Store{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/storefront/pages/wishlist.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="wishlist-section">
+
+    <div class="container">
+
+        <div class="wishlist-heading">
+            <span>Wishlist</span>
+            <h2>Sản phẩm yêu thích</h2>
+            <p>Những sản phẩm bạn đã lưu để xem hoặc mua sau</p>
+        </div>
+
+        {% if wishlist_items %}
+
+            <ul class="wishlist-grid">
+
+                {% for item in wishlist_items %}
+
+                    <li class="wishlist-card-item">
+
+                        <div class="wishlist-card">
+
+                            <div class="wishlist-image">
+
+                                <a href="{% url 'product_detail' item.product.id %}">
+
+                                    {% if item.product.product_image %}
+                                        <img src="{{ item.product.product_image.url }}"
+                                             alt="{{ item.product.product_name }}"
+                                             data-fallback="{% static 'store/images/book-placeholder.png' %}"
+                                             onerror="this.onerror=null; this.src=this.dataset.fallback; this.classList.add('is-fallback');">
+                                    {% else %}
+                                        <img src="{% static 'store/images/book-placeholder.png' %}"
+                                             alt="Chưa có ảnh">
+                                    {% endif %}
+
+                                </a>
+
+                                {% if item.product.discount > 0 %}
+                                    <span class="wishlist-sale-badge">
+                                        -{{ item.product.discount }}%
+                                    </span>
+                                {% endif %}
+
+                                <a href="{% url 'remove_wishlist' item.product.id %}"
+                                   class="wishlist-remove-floating"
+                                   title="Xóa khỏi yêu thích">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+
+                            </div>
+
+                            <div class="wishlist-content">
+
+                                <div class="wishlist-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>4.5</span>
+                                </div>
+
+                                <h6 class="wishlist-title">
+                                    <a href="{% url 'product_detail' item.product.id %}">
+                                        {{ item.product.product_name }}
+                                    </a>
+                                </h6>
+
+                                <div class="wishlist-price">
+
+                                    {% if item.product.discount > 0 %}
+
+                                        <del>
+                                            {{ item.product.price|floatformat:0 }} đ
+                                        </del>
+
+                                        <span>
+                                            {{ item.product.sale_price|floatformat:0 }} đ
+                                        </span>
+
+                                    {% else %}
+
+                                        <span>
+                                            {{ item.product.price|floatformat:0 }} đ
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                                {% if item.product.quantity > 0 %}
+
+                                    <a href="{% url 'add_to_cart' item.product.id %}"
+                                       class="wishlist-add-cart">
+                                        <i class="fas fa-shopping-basket"></i>
+                                        <span>Thêm vào giỏ</span>
+                                    </a>
+
+                                {% else %}
+
+                                    <span class="wishlist-add-cart disabled">
+                                        <i class="fas fa-box-open"></i>
+                                        <span>Hết hàng</span>
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <div class="empty-wishlist">
+                <i class="fas fa-heart-broken"></i>
+                <h4>Wishlist trống</h4>
+                <p>Bạn chưa lưu sản phẩm nào vào danh sách yêu thích</p>
+
+                <a href="{% url 'product_list' %}">
+                    Khám phá sản phẩm
+                </a>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+

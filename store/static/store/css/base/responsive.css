@@ -1,0 +1,132 @@
+﻿/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 992px) {
+
+    .section {
+        padding: 40px 0;
+    }
+
+    .section-heading h2 {
+        font-size: 26px;
+    }
+
+    .hero-banner__img {
+        height: 320px;
+    }
+
+    .news-text {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .news-form {
+        margin-top: 20px;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .section {
+        padding: 35px 0;
+    }
+
+    .section-heading {
+        margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+        font-size: 22px;
+    }
+
+    .hero-banner__img {
+        height: 220px;
+    }
+
+    .suggest-card {
+        padding: 14px;
+    }
+
+    .suggest-card img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .benefit-card {
+        padding: 22px 14px;
+    }
+
+    .benefit-card i {
+        font-size: 28px;
+    }
+
+    .news-text {
+        text-align: center;
+    }
+
+    .news-text h2 {
+        font-size: 24px;
+    }
+
+    .news-form {
+        flex-direction: column;
+        gap: 10px;
+        border-radius: 16px;
+        padding: 12px;
+    }
+
+    .news-form input {
+        width: 100%;
+        height: 45px;
+    }
+
+    .news-form button {
+        width: 100%;
+        border-radius: 12px;
+    }
+
+    .slider-arrow .slick-arrow {
+        display: none !important;
+    }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .hero-banner__img {
+        height: 180px;
+    }
+
+    .section-heading h2 {
+        font-size: 20px;
+    }
+
+    .suggest-card h5 {
+        font-size: 14px;
+    }
+
+    .benefit-card h5 {
+        font-size: 15px;
+    }
+
+    .benefit-card p {
+        font-size: 13px;
+    }
+
+    .news-text h2 {
+        font-size: 20px;
+    }
+
+    .news-text p {
+        font-size: 14px;
+    }
+}
+

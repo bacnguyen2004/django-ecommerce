@@ -1,0 +1,362 @@
+﻿{% extends "store/storefront/layouts/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/storefront/pages/checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="checkout-wrapper">
+
+    <div class="container-fluid px-lg-5">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row g-4 align-items-start">
+
+            <!-- LEFT SIDE -->
+            <div class="col-xl-7 col-lg-7">
+
+                <div class="checkout-card">
+
+                    <!-- TITLE -->
+                    <div class="checkout-header">
+
+                        <h3>
+                            <i class="fas fa-map-marker-alt"></i>
+                            Thông tin giao hàng
+                        </h3>
+
+                        <p>
+                            Vui lòng nhập đầy đủ thông tin nhận hàng
+                        </p>
+
+                    </div>
+
+                    <!-- FORM -->
+                    <form method="POST"
+                          action="{% url 'checkout' %}">
+
+                        {% csrf_token %}
+
+                        <div class="row">
+
+                            <!-- FULL NAME -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+                                    Họ tên
+                                </label>
+
+                                <input type="text"
+                                       name="full_name"
+                                       class="form-control"
+                                       value="{{ request.user.customer.name }}"
+                                       required>
+
+                            </div>
+
+                            <!-- PHONE -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+                                    Số điện thoại
+                                </label>
+
+                                <input type="text"
+                                       name="phone"
+                                       class="form-control"
+                                       value="{{ request.user.customer.phone }}"
+                                       required>
+
+                            </div>
+
+                            <!-- CITY -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+                                    Thành phố / Tỉnh
+                                </label>
+
+                                <input type="text"
+                                       name="city"
+                                       class="form-control"
+                                       placeholder="VD: TP.HCM"
+                                       required>
+
+                            </div>
+
+                            <!-- ADDRESS -->
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+                                    Địa chỉ cụ thể
+                                </label>
+
+                                <input type="text"
+                                       name="address"
+                                       class="form-control"
+                                       placeholder="Số nhà, đường..."
+                                       required>
+
+                            </div>
+
+                            <!-- NOTE -->
+                            <div class="col-12 mb-4">
+
+                                <label class="form-label">
+                                    Ghi chú
+                                </label>
+
+                                <textarea name="note"
+                                          rows="4"
+                                          class="form-control"
+                                          placeholder="Ghi chú cho shipper..."></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <!-- PAYMENT -->
+                        <div class="payment-section">
+
+                            <h5 class="payment-title">
+                                Phương thức thanh toán
+                            </h5>
+
+                            <div class="payment-method-grid">
+
+                                <!-- COD -->
+                                <label class="payment-card active-card">
+
+                                    <input type="radio"
+                                           name="payment_method"
+                                           value="COD"
+                                           checked>
+
+                                    <div class="payment-content">
+
+                                        <div class="payment-icon cod">
+
+                                            <i class="fas fa-money-bill-wave"></i>
+
+                                        </div>
+
+                                        <div>
+
+                                            <h6>
+                                                Thanh toán COD
+                                            </h6>
+
+                                            <p>
+                                                Thanh toán khi nhận hàng
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </label>
+
+                                <!-- ONLINE -->
+                                <label class="payment-card">
+
+                                    <input type="radio"
+                                           name="payment_method"
+                                           value="VNPAY">
+
+                                    <div class="payment-content">
+
+                                        <div class="payment-icon online">
+
+                                            <i class="fas fa-credit-card"></i>
+
+                                        </div>
+
+                                        <div>
+
+                                            <h6>
+                                                Thanh toán Online
+                                            </h6>
+
+                                            <p>
+                                                Chuyển khoản / Ví điện tử
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <!-- BUTTON -->
+                        <button type="submit"
+                                class="checkout-btn">
+
+                            <i class="fas fa-check-circle"></i>
+
+                            Xác nhận đặt hàng
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="col-xl-5 col-lg-5">
+
+                <div class="checkout-card order-summary sticky-top">
+
+                    <!-- TITLE -->
+                    <div class="checkout-header">
+
+                        <h3>
+                            <i class="fas fa-shopping-bag"></i>
+                            Đơn hàng của bạn
+                        </h3>
+
+                        <p>
+                            {{ totalCartQtySum }} sản phẩm
+                        </p>
+
+                    </div>
+
+                    <!-- PRODUCTS -->
+                    <div class="product-list">
+
+                        {% for item in cartItems %}
+
+                        <div class="product-item">
+
+                            <!-- IMAGE -->
+                            <div class="product-image">
+
+                                {% if item.product.product_image %}
+                                    <img src="{{ item.product.product_image.url }}"
+                                         alt="{{ item.product.product_name }}"
+                                         data-fallback="{% static 'store/images/book-placeholder.png' %}"
+                                         onerror="this.onerror=null; this.src=this.dataset.fallback; this.classList.add('is-fallback');">
+                                {% else %}
+                                    <img src="{% static 'store/images/book-placeholder.png' %}"
+                                         alt="Chưa có ảnh"
+                                         class="is-fallback">
+                                {% endif %}
+
+                            </div>
+
+                            <!-- INFO -->
+                            <div class="product-info">
+
+                                <h6>
+                                    {{ item.product.product_name }}
+                                </h6>
+
+                                <span>
+                                    SL:
+                                    {{ item.quantity }}
+                                </span>
+
+                            </div>
+
+                            <!-- PRICE -->
+                            <div class="product-price">
+
+                                {{ item.get_sale_price|floatformat:0 }} đ
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    <!-- SUMMARY -->
+                    <div class="summary-box">
+
+                        <div class="summary-item">
+
+                            <span>
+                                Tạm tính
+                            </span>
+
+                            <strong>
+                                {{ totalPrice|floatformat:0 }} đ
+                            </strong>
+
+                        </div>
+
+                        <div class="summary-item">
+
+                            <span>
+                                Phí vận chuyển
+                            </span>
+
+                            <strong>
+                                Miễn phí
+                            </strong>
+
+                        </div>
+
+                        <div class="summary-total">
+
+                            <span>
+                                Tổng thanh toán
+                            </span>
+
+                            <strong>
+                                {{ totalPrice|floatformat:0 }} đ
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <!-- BACK -->
+                    <a href="{% url 'cart' %}"
+                       class="back-cart-btn">
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Quay lại giỏ hàng
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+    document.querySelectorAll('.payment-card').forEach(card => {
+        card.addEventListener('click', function () {
+            document.querySelectorAll('.payment-card').forEach(item => {
+                item.classList.remove('active-card');
+            });
+
+            this.classList.add('active-card');
+            this.querySelector('input[type="radio"]').checked = true;
+        });
+    });
+</script>
+{% endblock %}
+

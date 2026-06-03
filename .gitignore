@@ -1,11 +1,14 @@
-Lib/
-Scripts/
-Include/
+.venv/
 
 __pycache__/
 *.pyc
+.codex-runserver*.log
 
 .env
+.env.docker
+.env.local
+.env.production
+.env.render
 
 db.sqlite3
 

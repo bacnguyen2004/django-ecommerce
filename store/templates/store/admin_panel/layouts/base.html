@@ -1,0 +1,114 @@
+﻿{% load static %}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Online Store{% endblock %}</title>
+
+    <link rel="icon" href="{% static 'store/images/favicon.png' %}">
+
+    <!-- FONTS -->
+    <link rel="stylesheet" href="{% static 'store/fonts/flaticon/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'store/fonts/icofont/icofont.min.css' %}">
+    <link rel="stylesheet" href="{% static 'store/fonts/fontawesome/fontawesome.min.css' %}">
+
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="{% static 'store/vendor/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'store/vendor/venobox/venobox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'store/vendor/slickslider/slick.min.css' %}">
+    <link rel="stylesheet" href="{% static 'store/vendor/niceselect/nice-select.min.css' %}">
+
+    <!-- BASE -->
+    <link rel="stylesheet" href="{% static 'store/css/base/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/base/base.css' %}">
+
+    <!-- COMPONENTS -->
+    <link rel="stylesheet" href="{% static 'store/css/components/button.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/components/form.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/components/table.css' %}">
+
+    <!-- ADMIN LAYOUT -->
+    <link rel="stylesheet" href="{% static 'store/css/admin_panel/layouts/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/admin_panel/layouts/header.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/admin_panel/layouts/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/admin_panel/layouts/footer.css' %}">
+
+    <!-- PAGE CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <button class="admin-sidebar-toggle"
+            type="button"
+            aria-label="Mở menu quản trị"
+            aria-controls="adminSidebar"
+            aria-expanded="false">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    {% include 'store/admin_panel/layouts/sidebar.html' %}
+
+    <div class="admin-sidebar-overlay" data-sidebar-close></div>
+
+    <div class="admin-main">
+
+        {% include 'store/admin_panel/layouts/header.html' %}
+
+        <main class="admin-content">
+            {% if messages %}
+                <div class="mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+
+        {% include 'store/admin_panel/layouts/footer.html' %}
+
+    </div>
+
+    <!-- JS -->
+    <script src="{% static 'store/vendor/bootstrap/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'store/vendor/bootstrap/popper.min.js' %}"></script>
+    <script src="{% static 'store/vendor/bootstrap/bootstrap.min.js' %}"></script>
+
+    <script>
+        (function () {
+            const toggle = document.querySelector('.admin-sidebar-toggle');
+            const overlay = document.querySelector('[data-sidebar-close]');
+
+            if (!toggle || !overlay) {
+                return;
+            }
+
+            const setSidebarOpen = (isOpen) => {
+                document.body.classList.toggle('sidebar-open', isOpen);
+                toggle.setAttribute('aria-expanded', String(isOpen));
+            };
+
+            toggle.addEventListener('click', function () {
+                setSidebarOpen(!document.body.classList.contains('sidebar-open'));
+            });
+
+            overlay.addEventListener('click', function () {
+                setSidebarOpen(false);
+            });
+        })();
+    </script>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+
+</html>
+
+

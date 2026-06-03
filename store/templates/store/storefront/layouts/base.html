@@ -1,0 +1,80 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Online Store{% endblock title %}</title>
+
+    <!-- CSS -->
+    <link rel="icon" href="{% static 'store/images/favicon.png' %}" />
+
+    <link rel="stylesheet" href="{% static 'store/fonts/flaticon/flaticon.css' %}" />
+    <link rel="stylesheet" href="{% static 'store/fonts/icofont/icofont.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'store/fonts/fontawesome/fontawesome.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'store/vendor/venobox/venobox.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'store/vendor/slickslider/slick.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'store/vendor/niceselect/nice-select.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'store/vendor/bootstrap/bootstrap.min.css' %}" />
+
+    <!-- BASE -->
+    <link rel="stylesheet" href="{% static 'store/css/base/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/base/base.css' %}">
+
+    <!-- COMPONENTS -->
+    <link rel="stylesheet" href="{% static 'store/css/components/button.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/components/form.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/components/product-card.css' %}?v=20260526-products">
+
+    <!-- WEB LAYOUT -->
+    <link rel="stylesheet" href="{% static 'store/css/storefront/layouts/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/storefront/layouts/header.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/storefront/layouts/footer.css' %}">
+
+    <!-- RESPONSIVE -->
+    <link rel="stylesheet" href="{% static 'store/css/base/responsive.css' %}">
+
+    <!-- PAGE CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    {% include 'store/storefront/layouts/header.html' %}
+
+    {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block slider %}{% endblock slider %}
+    {% block content %}{% endblock content %}
+    {% block profile %}{% endblock profile %}
+
+    {% include 'store/storefront/layouts/footer.html' %}
+
+    <!-- JS -->
+    <script src="{% static 'store/vendor/bootstrap/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'store/vendor/bootstrap/popper.min.js' %}"></script>
+    <script src="{% static 'store/vendor/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'store/vendor/countdown/countdown.min.js' %}"></script>
+    <script src="{% static 'store/vendor/niceselect/nice-select.min.js' %}"></script>
+    <script src="{% static 'store/vendor/slickslider/slick.min.js' %}"></script>
+    <script src="{% static 'store/vendor/venobox/venobox.min.js' %}"></script>
+    <script src="{% static 'store/js/nice-select.js' %}"></script>
+    <script src="{% static 'store/js/countdown.js' %}"></script>
+    <script src="{% static 'store/js/accordion.js' %}"></script>
+    <script src="{% static 'store/js/venobox.js' %}"></script>
+    <script src="{% static 'store/js/slick.js' %}"></script>
+    <script src="{% static 'store/js/main.js' %}"></script>
+
+    {% block js %}{% endblock js %}
+</body>
+</html>
+
+

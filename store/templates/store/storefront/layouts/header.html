@@ -1,0 +1,114 @@
+﻿{% load static %}
+
+<header class="header-part">
+    <div class="container">
+        <div class="header-content">
+
+            <a href="{% url 'home' %}" class="header-logo" aria-label="Online Store">
+                <img src="{% static 'store/images/logo.png' %}" alt="Online Store"/>
+            </a>
+
+            <div class="header-user">
+                <img src="{% static 'store/images/user.png' %}" alt="user"/>
+                <span>
+                    Xin chào,
+                    <strong>
+                        {% if user.is_authenticated %}
+                            {{ user.username }}
+                        {% else %}
+                            Khách
+                        {% endif %}
+                    </strong>
+                </span>
+            </div>
+
+            <form action="{% url 'product_list' %}" method="GET" class="header-form">
+                <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm..." />
+                <button type="submit" aria-label="Tìm kiếm">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+
+            <div class="header-widget-group">
+
+                <div class="header-dropdown dropdown">
+                    <button type="button" class="header-widget" aria-label="Tài khoản">
+                        <i class="fas fa-user"></i>
+                    </button>
+
+                    <ul class="dropdown-position-list">
+
+                        {% if user.is_authenticated %}
+                            {% if user.is_superuser %}
+                                <li><a href="{% url 'dashboard' %}">Trang quản trị</a></li>
+                            {% elif user.customer and user.customer.role == 'admin' %}
+                                <li><a href="{% url 'dashboard' %}">Trang quản trị</a></li>
+                            {% endif %}
+
+                            <li><a href="{% url 'my_orders' %}">Đơn hàng của tôi</a></li>
+                            <li><a href="{% url 'profile' %}">Thông tin tài khoản</a></li>
+                            <li><a href="{% url 'logout' %}">Đăng xuất</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Đăng nhập</a></li>
+                            <li><a href="{% url 'register' %}">Đăng ký</a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+
+                <a href="{% url 'wishlist' %}" class="header-widget" aria-label="Yêu thích">
+                    <i class="fas fa-heart"></i>
+                    <sup>{{ totalSave|default:0 }}</sup>
+                </a>
+
+                <a href="{% url 'cart' %}" class="header-widget" aria-label="Giỏ hàng">
+                    <i class="fas fa-shopping-basket"></i>
+                    <sup>{{ totalItem|default:0 }}</sup>
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<nav class="navbar-part">
+    <div class="container">
+        <div class="navbar-content">
+
+            <ul class="navbar-list">
+
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{% url 'home' %}">Trang chủ</a>
+                </li>
+
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{% url 'product_list' %}">Sản phẩm</a>
+                </li>
+
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{% url 'contact' %}">Liên hệ</a>
+                </li>
+
+                <li class="navbar-item dropdown">
+                    <a class="navbar-link dropdown-arrow" href="#">Thể loại</a>
+                    <ul class="dropdown-position-list">
+                        {% for item in categories %}
+                            <li>
+                                <a href="{% url 'product_list' %}?category={{ item.id }}">
+                                    {{ item.category_name }}
+                                </a>
+                            </li>
+                        {% empty %}
+                            <li><a href="#">Chưa có</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+

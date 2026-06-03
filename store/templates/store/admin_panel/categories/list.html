@@ -1,0 +1,171 @@
+﻿{% extends "store/admin_panel/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Quản lý danh mục{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/admin_panel/pages/category.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="category-page">
+
+    <div class="category-header">
+
+        <div>
+            <span class="page-label">Categories</span>
+
+            <h2>Quản lý danh mục</h2>
+
+            <p>
+                Danh sách toàn bộ danh mục sản phẩm trong hệ thống
+            </p>
+        </div>
+
+        <a href="{% url 'add_category' %}"
+           class="btn-category-add">
+
+            <i class="fas fa-plus"></i>
+
+            Thêm danh mục
+
+        </a>
+
+    </div>
+
+
+    <div class="category-card">
+
+        <div class="table-responsive">
+
+            <table class="table category-table">
+
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ảnh</th>
+                        <th>Tên danh mục</th>
+                        <th>Trạng thái</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in categories %}
+                    <tr>
+
+                        <td class="text-muted font-weight-bold">
+                            {{ forloop.counter }}
+                        </td>
+
+                        <td>
+
+                            {% if item.category_image %}
+
+                                <img src="{{ item.category_image.url }}"
+                                     class="category-thumb"
+                                     alt="{{ item.category_name }}">
+
+                            {% else %}
+
+                                <div class="category-no-image">
+                                    <i class="fas fa-image"></i>
+                                </div>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <div class="category-info">
+
+                                <h6>
+                                    {{ item.category_name }}
+                                </h6>
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            {% if item.status %}
+
+                                <span class="category-badge active">
+                                    Hiển thị
+                                </span>
+
+                            {% else %}
+
+                                <span class="category-badge inactive">
+                                    Đã ẩn
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <div class="category-actions">
+
+                                <a href="{% url 'edit_category' item.id %}"
+                                   class="action-btn edit">
+
+                                    <i class="fas fa-edit"></i>
+
+                                </a>
+
+                                <a href="{% url 'delete_category' item.id %}"
+                                   class="action-btn delete"
+                                   onclick="return confirm('Bạn có chắc muốn xóa danh mục này?')">
+
+                                    <i class="fas fa-trash"></i>
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="5">
+
+                            <div class="empty-state">
+
+                                <i class="fas fa-folder-open"></i>
+
+                                <h5>Chưa có danh mục nào</h5>
+
+                                <p>
+                                    Hãy thêm danh mục đầu tiên vào hệ thống.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

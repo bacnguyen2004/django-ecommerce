@@ -1,0 +1,106 @@
+﻿{% extends "store/storefront/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Đăng nhập | Online Store{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/storefront/pages/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-part">
+    <div class="container">
+        <div class="auth-card">
+
+            <div class="auth-logo">
+                <a href="{% url 'home' %}" aria-label="Về trang chủ Online Store">
+                    <img src="{% static 'store/images/logo.png' %}" alt="Online Store">
+                </a>
+            </div>
+
+            <div class="auth-header">
+                <h2>Đăng nhập</h2>
+                <p>Chào mừng bạn quay lại. Đăng nhập để tiếp tục mua sắm.</p>
+            </div>
+
+            <form class="auth-form" action="{% url 'login' %}" method="post" novalidate>
+                {% csrf_token %}
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="form-group">
+                    <label class="form-label" for="username">Email hoặc Username</label>
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        class="form-control"
+                        placeholder="VD: nguyenvanbac hoặc email@example.com"
+                        autocomplete="username"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Mật khẩu</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        class="form-control"
+                        placeholder="Nhập mật khẩu của bạn"
+                        autocomplete="current-password"
+                        required>
+                </div>
+
+                <div class="auth-option">
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="showPassword"
+                            aria-controls="password">
+                        <label class="form-check-label" for="showPassword">
+                            Hiển thị mật khẩu
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="auth-btn">
+                    Đăng nhập
+                </button>
+
+                <div class="auth-footer">
+                    <p>
+                        Chưa có tài khoản?
+                        <a href="{% url 'register' %}">Đăng ký ngay</a>
+                    </p>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggle = document.getElementById("showPassword");
+        const password = document.getElementById("password");
+
+        if (!toggle || !password) return;
+
+        toggle.addEventListener("change", function () {
+            password.type = this.checked ? "text" : "password";
+        });
+    });
+</script>
+{% endblock js %}
+
+

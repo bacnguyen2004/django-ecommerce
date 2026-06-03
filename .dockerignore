@@ -1,0 +1,11 @@
+.git
+.venv
+__pycache__
+*.pyc
+.env
+.env.*
+db.sqlite3
+media
+staticfiles
+.codex-runserver.err.log
+.codex-runserver.out.log

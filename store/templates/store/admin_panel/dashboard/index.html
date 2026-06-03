@@ -1,0 +1,293 @@
+{% extends "store/admin_panel/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/admin_panel/pages/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+    <div class="dashboard-header">
+        <div>
+            <span class="page-label">Dashboard</span>
+            <h2>Tổng quan quản trị</h2>
+            <p>Xin chào, {{ request.user.username }}. Dữ liệu vận hành mới nhất của cửa hàng.</p>
+        </div>
+
+        <div class="dashboard-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>{% now "d/m/Y" %}</span>
+        </div>
+    </div>
+
+    <div class="dashboard-stats">
+        <div class="dashboard-stat-card">
+            <div>
+                <span>Doanh thu</span>
+                <h3>{{ revenue|floatformat:0 }} đ</h3>
+                <small>Từ đơn hàng hoàn thành</small>
+            </div>
+            <div class="stat-icon tone-green">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div>
+                <span>Đơn hàng</span>
+                <h3>{{ total_orders }}</h3>
+                <small>{{ pending_orders }} đơn chờ xử lý</small>
+            </div>
+            <div class="stat-icon tone-orange">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div>
+                <span>Khách hàng</span>
+                <h3>{{ total_customers }}</h3>
+                <small>Tài khoản khách hàng</small>
+            </div>
+            <div class="stat-icon tone-blue">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div>
+                <span>Sản phẩm</span>
+                <h3>{{ total_products }}</h3>
+                <small>{{ low_stock_count }} sản phẩm cần nhập</small>
+            </div>
+            <div class="stat-icon tone-red">
+                <i class="fas fa-box-open"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-main-grid">
+        <section class="dashboard-card dashboard-chart-card">
+            <div class="dashboard-card-header">
+                <div>
+                    <h5>Doanh thu 7 ngày</h5>
+                    <p>Chỉ tính các đơn hàng đã hoàn thành</p>
+                </div>
+                <span>VNĐ</span>
+            </div>
+
+            {% if revenue_chart_has_data %}
+                <div class="revenue-chart" aria-label="Doanh thu 7 ngày gần đây">
+                    {% for point in revenue_chart_points %}
+                        <div class="chart-column">
+                            <div class="chart-value">
+                                {{ point.value|floatformat:0 }} đ
+                            </div>
+                            <div class="chart-track">
+                                <span style="height: {{ point.percent }}%"></span>
+                            </div>
+                            <strong>{{ point.label }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-panel compact">
+                    <i class="fas fa-chart-line"></i>
+                    <h6>Chưa có doanh thu</h6>
+                    <p>Dữ liệu sẽ xuất hiện khi có đơn hàng hoàn thành.</p>
+                </div>
+            {% endif %}
+        </section>
+
+        <aside class="dashboard-card">
+            <div class="dashboard-card-header">
+                <div>
+                    <h5>Sản phẩm bán chạy</h5>
+                    <p>Theo đơn đã hoàn thành</p>
+                </div>
+            </div>
+
+            <div class="rank-list">
+                {% for item in top_products %}
+                    <div class="rank-item">
+                        <span class="rank-index">{{ forloop.counter }}</span>
+                        <div>
+                            <h6>{{ item.product__product_name }}</h6>
+                            <p>{{ item.sold }} sản phẩm đã bán</p>
+                        </div>
+                        <strong>{{ item.revenue|floatformat:0 }} đ</strong>
+                    </div>
+                {% empty %}
+                    <div class="empty-panel compact">
+                        <i class="fas fa-box-open"></i>
+                        <h6>Chưa có dữ liệu</h6>
+                        <p>Sản phẩm bán chạy sẽ được cập nhật theo đơn hoàn thành.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </aside>
+    </div>
+
+    <div class="dashboard-ops-grid">
+        <section class="dashboard-card">
+            <div class="dashboard-card-header">
+                <div>
+                    <h5>Tiến độ đơn hàng</h5>
+                    <p>Tỷ lệ hoàn thành trên tổng đơn đã đặt</p>
+                </div>
+                <strong>{{ completion_rate }}%</strong>
+            </div>
+
+            <div class="progress-line">
+                <span style="width: {{ completion_rate }}%"></span>
+            </div>
+
+            <div class="order-status-grid">
+                <div>
+                    <span>Chờ xác nhận</span>
+                    <strong>{{ pending_orders }}</strong>
+                </div>
+                <div>
+                    <span>Đã xác nhận</span>
+                    <strong>{{ confirmed_orders }}</strong>
+                </div>
+                <div>
+                    <span>Đang giao</span>
+                    <strong>{{ shipping_orders }}</strong>
+                </div>
+                <div>
+                    <span>Hoàn thành</span>
+                    <strong>{{ completed_orders }}</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-card">
+            <div class="dashboard-card-header">
+                <div>
+                    <h5>Hoạt động gần đây</h5>
+                    <p>Đơn hàng và cảnh báo hệ thống</p>
+                </div>
+            </div>
+
+            <div class="activity-feed">
+                {% for activity in recent_activities %}
+                    <div class="activity-item">
+                        <span class="activity-dot {{ activity.color }}"></span>
+                        <div>
+                            <h6>{{ activity.title }}</h6>
+                            <p>{{ activity.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+    <div class="dashboard-bottom-grid">
+        <section class="dashboard-card">
+            <div class="dashboard-card-header">
+                <div>
+                    <h5>Đơn hàng mới nhất</h5>
+                    <p>5 đơn hàng vừa được ghi nhận</p>
+                </div>
+                <a href="{% url 'admin_order' %}">Xem tất cả</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày tạo</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in recent_orders %}
+                        <tr>
+                            <td>
+                                <strong>#{{ item.id }}</strong>
+                            </td>
+                            <td>
+                                {% if item.customer %}
+                                    {{ item.customer.name|default:item.customer.user.username }}
+                                {% else %}
+                                    Khách lẻ
+                                {% endif %}
+                            </td>
+                            <td class="price">
+                                {{ item.total_price|floatformat:0 }} đ
+                            </td>
+                            <td>
+                                <span class="status-badge status-{{ item.status }}">
+                                    {{ item.get_status_display }}
+                                </span>
+                            </td>
+                            <td>{{ item.created_at|date:"d/m/Y H:i" }}</td>
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="empty-panel compact">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <h6>Chưa có đơn hàng nào</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <aside class="dashboard-card">
+            <div class="dashboard-card-header">
+                <div>
+                    <h5>Tồn kho cần chú ý</h5>
+                    <p>Ngưỡng cảnh báo: {{ low_stock_threshold }} sản phẩm</p>
+                </div>
+                <span>{{ low_stock_count }}</span>
+            </div>
+
+            <div class="stock-list">
+                {% for product in low_stock_products %}
+                    <div class="stock-item">
+                        <div>
+                            <h6>{{ product.product_name }}</h6>
+                            <p>
+                                {% if product.category %}
+                                    {{ product.category.category_name }}
+                                {% else %}
+                                    Chưa có danh mục
+                                {% endif %}
+                            </p>
+                        </div>
+                        {% if product.quantity > 0 %}
+                            <strong class="stock-low">{{ product.quantity }}</strong>
+                        {% else %}
+                            <strong class="stock-empty">0</strong>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    <div class="empty-panel compact">
+                        <i class="fas fa-check-circle"></i>
+                        <h6>Tồn kho ổn định</h6>
+                        <p>Không có sản phẩm dưới ngưỡng cảnh báo.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </aside>
+    </div>
+
+</div>
+
+{% endblock %}

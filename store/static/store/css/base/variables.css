@@ -1,0 +1,32 @@
+﻿/* =========================
+   COLOR
+========================= */
+
+:root {
+
+    /* MAIN COLOR */
+    --primary: #2f6b4f;
+    --primary-dark: #24543e;
+    --secondary: #f4b942;
+
+    /* TEXT */
+    --text: #222222;
+    --muted: #777777;
+
+    /* BACKGROUND */
+    --bg: #f8f9fa;
+    --white: #ffffff;
+
+    /* BORDER */
+    --border: #e5e5e5;
+
+    /* SHADOW */
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+    /* RADIUS */
+    --radius: 14px;
+
+    /* TRANSITION */
+    --transition: 0.25s ease;
+}
+

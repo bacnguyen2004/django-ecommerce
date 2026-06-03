@@ -1,0 +1,164 @@
+﻿{% extends "store/admin_panel/layouts/base.html" %}
+{% load static %}
+
+{% block title %}Thêm danh mục{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'store/css/admin_panel/pages/category.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="category-page">
+
+    <div class="category-header">
+
+        <div>
+
+            <span class="page-label">
+                Add Category
+            </span>
+
+            <h2>Thêm danh mục</h2>
+
+            <p>
+                Tạo danh mục sản phẩm mới cho hệ thống
+            </p>
+
+        </div>
+
+        <a href="{% url 'admin_category' %}"
+           class="btn-category-back">
+
+            <i class="fas fa-arrow-left"></i>
+
+            Quay lại
+
+        </a>
+
+    </div>
+
+
+    <form method="POST"
+          enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="category-form-wrapper">
+
+            <div class="category-card">
+
+                <div class="card-title">
+
+                    <i class="fas fa-folder-plus"></i>
+
+                    Thông tin danh mục
+
+                </div>
+
+
+                <!-- NAME -->
+                <div class="form-group">
+
+                    <label>
+                        Tên danh mục
+                    </label>
+
+                    <input type="text"
+                           name="category_name"
+                           class="form-control"
+                           placeholder="Nhập tên danh mục">
+
+                </div>
+
+
+                <!-- IMAGE -->
+                <div class="form-group">
+
+                    <label>
+                        Ảnh danh mục
+                    </label>
+
+                    <div class="upload-box">
+
+                        <img id="preview-image"
+                             src="{% static 'store/images/error.png' %}"
+                             alt="upload">
+
+                    </div>
+
+                    <input type="file"
+                           name="category_image"
+                           class="form-control mt-3"
+                           accept="image/*"
+                           onchange="previewImage(event)">
+
+                </div>
+
+
+                <!-- STATUS -->
+                <div class="form-group">
+
+                    <label class="d-block">
+                        Trạng thái
+                    </label>
+
+                    <div class="custom-switch">
+
+                        <input type="checkbox"
+                               id="status"
+                               name="status"
+                               checked>
+
+                        <label for="status">
+                            Hiển thị danh mục
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTON -->
+                <button type="submit"
+                        class="btn-submit green">
+
+                    <i class="fas fa-save"></i>
+
+                    Lưu danh mục
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+    function previewImage(event){
+
+        const image = document.getElementById(
+            'preview-image'
+        );
+
+        if(event.target.files[0]){
+
+            image.src = URL.createObjectURL(
+                event.target.files[0]
+            );
+
+        }
+
+    }
+
+</script>
+{% endblock %}
+
+
